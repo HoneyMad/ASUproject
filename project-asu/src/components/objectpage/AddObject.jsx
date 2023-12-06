@@ -4,14 +4,15 @@ let template = {
 
     name: "",
     code: "",
-    status: "",
-    startDate: new Date().toLocaleString('en-CA'),
-    list: ['ПС','ММ','ММ','ММ','ММ'],
+    status: "Принята в работу",
+    startDate: "",
+    endDate: "",
+    list: [],
     note: '',
     color: "#6496ff",
 }
 
-let systemList = ['ПС','ОС', 'ТСОН', "СОУЭ", "СКУД", "АСПТ", "ДУ", "СКС", "РД"]
+let systemList = ['ПС', 'ОС', 'ТСОН', "СОУЭ", "СКУД", "АСПТ", "ДУ", "СКС"]
 
 
 const AddObject = ({setModalVisible,  addOrder}) => {
@@ -33,8 +34,8 @@ const AddObject = ({setModalVisible,  addOrder}) => {
     }
 
     const removeItem = (val) => {
-      let arr = usedSystemList.filter((el)=> el !== val)
-        setCurSystemList([curSystemList,val])
+        let arr = usedSystemList.filter((el) => el !== val)
+        setCurSystemList([...curSystemList, val])
         setSelectedValue(val)
         setUsedSystemList([...arr])
         setTemplateState({...templateState, list: arr})
@@ -56,7 +57,7 @@ const AddObject = ({setModalVisible,  addOrder}) => {
 
 
     return (
-        <div className={"d-flex justify-content-center mt-2"} >
+        <div className={"d-flex justify-content-center mt-2"}>
 
             <form onSubmit={(e) => {
                 submitForm(e)
@@ -77,18 +78,23 @@ const AddObject = ({setModalVisible,  addOrder}) => {
 
                     {
                         curSystemList.length !== 0
-                        ?
+                            ?
                             <div className={'d-flex '}>
-                                <select className={'form-select'} value={selectedValue} name={'order-select'} onChange={(e)=> {setSelectedValue(e.target.value); console.log(e.target.value)}}>
-                                    {curSystemList.map((system, index)=>
-                                        <option key={"system"+ index}>{system}</option>
+                                <select className={'form-select'} value={selectedValue} name={'order-select'}
+                                        onChange={(e) => {
+                                            setSelectedValue(e.target.value);
+                                            console.log(e.target.value)
+                                        }}>
+                                    {curSystemList.map((system, index) =>
+                                        <option key={"system" + index}>{system}</option>
                                     )}
                                 </select>
                                 <button className={'btn'} style={{background: "#91FCA2"}}
-                                        type={"button"} onClick={(event)=> {
+                                        type={"button"} onClick={(event) => {
                                     console.log(selectedValue);
                                     addItem(selectedValue)
-                                }}>+</button>
+                                }}>+
+                                </button>
                             </div>
                             : <div className={'bg-warning px-2 rounded-3'}>Список доступных СС пуст</div>
                     }
@@ -97,10 +103,12 @@ const AddObject = ({setModalVisible,  addOrder}) => {
                 </div>
                 <div className={' '}>
                     {
-                        [...usedSystemList].map((val,index)=>
-                            <div key={'input'+index} className={'d-flex mt-2 w-25 ms-2'}>
-                                <input  className={'form-control'} defaultValue={val} readOnly={true}/>
-                                <button type={"button"} className={'btn'} style={{background: "#91FCA2"}} onClick={()=>removeItem(val)}>x</button>
+                        [...usedSystemList].map((val, index) =>
+                            <div key={'input' + index} className={'d-flex mt-2 w-25 justify-content-between'}>
+                                <input className={'form-control'} style={{width:"100px"}} defaultValue={val} readOnly={true}/>
+                                <button type={"button"} className={'btn'} style={{background: "#91FCA2"}}
+                                        onClick={() => removeItem(val)}>x
+                                </button>
                             </div>
                         )
                     }
