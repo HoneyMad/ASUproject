@@ -1,22 +1,26 @@
 import React, {useState} from 'react';
 
 let template = {
+
     name: "",
     code: "",
     status: "",
     startDate: new Date().toLocaleString('en-CA'),
     list: ['ПС','ММ','ММ','ММ','ММ'],
     note: '',
-    color: "#0F6",
+    color: "#6496ff",
 }
 
 let systemList = ['ПС','ОС', 'ТСОН', "СОУЭ", "СКУД", "АСПТ", "ДУ", "СКС", "РД"]
 
 
-const AddObject = () => {
-    const[curSystemList, setCurSystemList]=useState(systemList)
-    const[usedSystemList, setUsedSystemList]=useState([])
-    const [selectedValue,setSelectedValue]=useState(systemList[0])
+const AddObject = ({setModalVisible,  addOrder}) => {
+
+    const [templateState,setTemplateState] = useState(template)
+
+    const [curSystemList, setCurSystemList] = useState(systemList)
+    const [usedSystemList, setUsedSystemList] = useState([])
+    const [selectedValue, setSelectedValue] = useState(systemList[0])
 
     const addItem = (val) => {
         let arr = [...usedSystemList]
@@ -25,6 +29,7 @@ const AddObject = () => {
         setCurSystemList([...filterArr])
         setUsedSystemList(arr)
         setSelectedValue(filterArr[0])
+        setTemplateState({...templateState, list: arr})
     }
 
     const removeItem = (val) => {
@@ -32,21 +37,40 @@ const AddObject = () => {
         setCurSystemList([curSystemList,val])
         setSelectedValue(val)
         setUsedSystemList([...arr])
+        setTemplateState({...templateState, list: arr})
+    }
+
+    const submitForm = (e) => {
+        e.preventDefault()
+
+        setCurSystemList(systemList)
+        setUsedSystemList([])
+        setSelectedValue(systemList[0])
+
+        addOrder(templateState)
+
+
+        setModalVisible(false)
+        setTemplateState(template)
     }
 
 
     return (
         <div className={"d-flex justify-content-center mt-2"} >
 
-            <form className={" rounded-3 p-2"} style={{border:"solid 1px"}}>
+            <form onSubmit={(e) => {
+                submitForm(e)
+            }} className={" rounded-3 p-2"} style={{border: "solid 1px"}}>
                 <h3 className={'text-center'}>Добавление заказа</h3>
                 <div className={'d-flex justify-content-between mt-2'}>
-                    <label >Наименование объекта</label>
-                    <input className={'form-control'} name={'order-name'} type={"text"}/>
+                    <label>Наименование объекта</label>
+                    <input className={'form-control'} name={'order-name'} placeholder={"Введите название объекта"} type={"text"} maxLength={50} value={templateState.name}
+                           onChange={(e) => {setTemplateState({...templateState, name: e.target.value})}}/>
                 </div>
                 <div className={'d-flex justify-content-between mt-2'}>
                     <label>Код объекта</label>
-                    <input className={'form-control'} name={'order-code'} type={"text"}/>
+                    <input className={'form-control w-25'} name={'order-code'} placeholder={'F48G1'} maxLength={6} type={"text"} value={templateState.code}
+                           onChange={(e) => {setTemplateState({...templateState, code: e.target.value})}}/>
                 </div>
                 <div className={'d-flex justify-content-between mt-2'}>
                     <label className={"w-50"}>Список СС на объекте</label>
@@ -71,7 +95,7 @@ const AddObject = () => {
 
 
                 </div>
-                <div className={'d-flex flex-wrap justify-content-between '}>
+                <div className={' '}>
                     {
                         [...usedSystemList].map((val,index)=>
                             <div key={'input'+index} className={'d-flex mt-2 w-25 ms-2'}>
@@ -84,11 +108,13 @@ const AddObject = () => {
 
                 <div className={'d-flex justify-content-between mt-2'}>
                     <label className={"w-50"}>Дата заказа</label>
-                    <input className={'form-control'} name={'order-date'} type={"date"}/>
+                    <input className={'form-control'} style={{width:"35%"}} name={'order-date'} type={"date"} value={templateState.startDate}
+                           onChange={(e) => {setTemplateState({...templateState, startDate: e.target.value})}} />
                 </div>
                 <div className={'d-flex justify-content-between mt-2'}>
                     <label className={"w-50"}>Примечание</label>
-                    <textarea className={"form-control"} name={'order-note'} maxLength={255}/>
+                    <textarea className={"form-control"} name={'order-note'} maxLength={255} value={templateState.note}
+                              onChange={(e) => {setTemplateState({...templateState, note: e.target.value})}} />
                 </div>
 
                 <div className={"d-flex justify-content-center mt-2"}>
