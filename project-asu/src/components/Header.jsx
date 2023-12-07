@@ -11,6 +11,9 @@ const Header = ({setPage, page}) => {
                 <button className="btn btn-light p-2 rounded-3" onClick={() => setPage("Отчеты")}>
                     {page === "Отчеты" ? <u>Отчеты</u> : "Отчеты"}
                 </button>
+                <button className="btn btn-light p-2 rounded-3 ms-5" onClick={() => setPage("Анализ")}>
+                    {page === "Анализ" ? <u>Анализ</u> : "Анализ"}
+                </button>
 
             </div>
             <div>

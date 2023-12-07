@@ -1,10 +1,16 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import ObjectListItem from "./ObjectListItem";
 import AddObject from "./AddObject";
 import Modal from "../Modal/modal";
 import EditObject from "./EditObject";
+import ObjectService from "../../API/ObjectService/ObjectService";
 
-const testOrderList = []
+
+const loadData= async(setList) => {
+    let data=await ObjectService.getAllObjects()
+    console.log(data)
+    setList(data)
+}
 
 
 const ObjectPage = () => {
@@ -12,7 +18,12 @@ const ObjectPage = () => {
     const [createModalVisible, setCreateModalVisible] = useState(false)
     const [editModalVisible, setEditModalVisible] = useState(false)
 
-    const [orderList, setOrderList] = useState(testOrderList)
+    const [orderList, setOrderList] = useState([])
+    useEffect(() => {
+        loadData(setOrderList)
+       //setOrderList([...loadData()])
+        //setOrderList(loadData())
+    },[])
 
     const addOrder = (order) => {
         setOrderList([...orderList, order])

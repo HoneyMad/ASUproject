@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import ObjectService from "../../API/ObjectService/ObjectService";
 
 let systemList = ['ПС', 'ОС', 'ТСОН', "СОУЭ", "СКУД", "АСПТ", "ДУ", "СКС"]
 let colorList = {
@@ -65,6 +66,7 @@ const EditObject = ({setModalVisible, orderList, order, editObject}) => {
         console.log([...orderList].findIndex((el)=> el === order))
 
         editObject(templateState,[...orderList].findIndex((el)=> el === order))
+        ObjectService.editObject(templateState)
 
 
         setModalVisible(false)

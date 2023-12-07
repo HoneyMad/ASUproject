@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
+import ObjectService from "../../API/ObjectService/ObjectService";
 
 let template = {
 
     name: "",
     code: "",
     status: "Принята в работу",
-    startDate: "",
-    endDate: "",
+    startDate: null,
+    endDate: null,
     list: [],
     note: '',
     color: "#6496ff",
@@ -49,7 +50,7 @@ const AddObject = ({setModalVisible,  addOrder}) => {
         setSelectedValue(systemList[0])
 
         addOrder(templateState)
-
+        ObjectService.addObject(templateState)
 
         setModalVisible(false)
         setTemplateState(template)
@@ -117,7 +118,7 @@ const AddObject = ({setModalVisible,  addOrder}) => {
                 <div className={'d-flex justify-content-between mt-2'}>
                     <label className={"w-50"}>Дата заказа</label>
                     <input className={'form-control'} style={{width:"35%"}} name={'order-date'} type={"date"} value={templateState.startDate}
-                           onChange={(e) => {setTemplateState({...templateState, startDate: e.target.value})}} />
+                           onChange={(e) => {setTemplateState({...templateState, startDate: e.target.value, endDate: e.target.value})}} />
                 </div>
                 <div className={'d-flex justify-content-between mt-2'}>
                     <label className={"w-50"}>Примечание</label>
