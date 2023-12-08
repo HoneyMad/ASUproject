@@ -1,6 +1,8 @@
 import React from 'react';
+import EditObject from "./EditObject";
+import Modal from "../Modal/modal";
 
-const ObjectListItem = ({order}) => {
+const ObjectListItem = ({order,orderList,editModalVisible,editOrder,setEditModalVisible}) => {
     return (
         <div className='w-100 mt-3' style={{border: "solid 1px"}}>
             <div className='d-flex justify-content-between align-items-center p-2'
@@ -10,7 +12,7 @@ const ObjectListItem = ({order}) => {
                 <div>{order.name}</div>
                 <div>{order.code}</div>
                 <div>{order.status}</div>
-                <div><img src={'./files/edit.svg'} width={48} height={48}/></div>
+                <div><button className={'btn btn-outline-light'}  onClick={()=> {setEditModalVisible(true)}}><img src={'./files/edit.svg'} width={48} height={48}/></button></div>
             </div>
 
             <div>
@@ -26,6 +28,12 @@ const ObjectListItem = ({order}) => {
                     </div>
                     <div className={'w-50 text-wrap'} style={{borderLeft: "solid 1px"}}>{order.note}</div>
                 </div>
+
+                <Modal
+                    visible={editModalVisible}
+                    setVisible={setEditModalVisible}
+                    children={<EditObject  setModalVisible={setEditModalVisible} editObject={editOrder} order={order} orderList={orderList}/>}
+                />
             </div>
 
         </div>
