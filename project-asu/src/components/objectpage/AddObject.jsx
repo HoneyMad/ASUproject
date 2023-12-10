@@ -67,11 +67,11 @@ const AddObject = ({setModalVisible,  addOrder}) => {
                 <div className={'d-flex justify-content-between mt-2'}>
                     <label>Наименование объекта</label>
                     <input className={'form-control'} name={'order-name'} placeholder={"Введите название объекта"} type={"text"} maxLength={50} value={templateState.name}
-                           onChange={(e) => {setTemplateState({...templateState, name: e.target.value})}}/>
+                           onChange={(e) => {setTemplateState({...templateState, name: e.target.value})}} required={true}/>
                 </div>
                 <div className={'d-flex justify-content-between mt-2'}>
                     <label>Код объекта</label>
-                    <input className={'form-control w-25'} name={'order-code'} placeholder={'F48G1'} maxLength={6} type={"text"} value={templateState.code}
+                    <input className={'form-control w-25'} name={'order-code'} placeholder={'F48G1'} maxLength={6} type={"text"} value={templateState.code} required={true}
                            onChange={(e) => {setTemplateState({...templateState, code: e.target.value})}}/>
                 </div>
                 <div className={'d-flex justify-content-between mt-2'}>
@@ -117,7 +117,7 @@ const AddObject = ({setModalVisible,  addOrder}) => {
 
                 <div className={'d-flex justify-content-between mt-2'}>
                     <label className={"w-50"}>Дата заказа</label>
-                    <input className={'form-control'} style={{width:"35%"}} name={'order-date'} type={"date"} value={templateState.startDate}
+                    <input className={'form-control'} style={{width:"35%"}} name={'order-date'} type={"date"} value={templateState.startDate} required={true}
                            onChange={(e) => {setTemplateState({...templateState, startDate: e.target.value, endDate: e.target.value})}} />
                 </div>
                 <div className={'d-flex justify-content-between mt-2'}>

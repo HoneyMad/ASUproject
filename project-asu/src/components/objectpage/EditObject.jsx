@@ -15,8 +15,8 @@ const EditObject = ({setModalVisible, orderList, order, editObject}) => {
 
     const [templateState,setTemplateState] = useState(order)
 
-    const [curSystemList, setCurSystemList] = useState(systemList)
-    const [usedSystemList, setUsedSystemList] = useState([])
+    const [curSystemList, setCurSystemList] = useState(systemList.filter((el)=> !order.list.includes(el)))
+    const [usedSystemList, setUsedSystemList] = useState(order.list)
     const [selectedValue, setSelectedValue] = useState(systemList[0])
 
     const chooseColor = (val) => {

@@ -120,7 +120,7 @@ const ReportPage = () => {
             </div>
             <div className={'w-100'}>
                 <h3 className={'text-center'}>Архив по объектам</h3>
-                <table className={'w-100'}>
+                <table className={'w-100 table table-hover'}>
                     <thead>
                        <tr>
                            <th className={tableBorder}>№</th>

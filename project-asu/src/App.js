@@ -2,6 +2,7 @@ import Header from "./components/Header";
 import {useState} from "react";
 import ObjectPage from "./components/objectpage/ObjectPage";
 import ReportPage from "./components/ReportPage/ReportPage";
+import Analysis from "./components/Analys page/Analysis";
 
 function App() {
 
@@ -26,6 +27,8 @@ const createPage = (page) => {
             return <ObjectPage/>
         case "Отчеты":
             return <ReportPage/>
+        case "Анализ":
+            return <Analysis/>
     }
 
 }
